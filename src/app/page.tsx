@@ -9,8 +9,8 @@ export default function Home() {
   const tasks = useQuery(api?.task?.get);
   return (
     <div>
-      {tasks?.map(({ _id, text }: any) => <div key={_id}>{text}</div>)}
-      {/* <SignUp /> */}
+      {/* {tasks?.map(({ _id, text }: any) => <div key={_id}>{text}</div>)} */}
+      <SignUp />
       {/* <Button>Click me</Button> */}
     </div>
   );
