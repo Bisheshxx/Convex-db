@@ -1,13 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import {
-  ClerkProvider,
-  SignIn,
-  SignUp,
-  SignUpButton,
-  useAuth,
-  UserButton,
-} from "@clerk/nextjs";
+import { useAuth } from "@clerk/nextjs";
 import {
   AuthLoading,
   Authenticated,
@@ -16,9 +9,6 @@ import {
 } from "convex/react";
 import { ConvexProviderWithClerk } from "convex/react-clerk";
 import Navigation from "@/components/NavigationBar";
-import { redirect } from "next/navigation";
-import { useRouter } from "next/router";
-
 interface IProviderProps {
   children: React.ReactNode;
 }
@@ -27,8 +17,8 @@ const convex = new ConvexReactClient(convexUrl!);
 const Providers = ({ children }: IProviderProps) => {
   const [isMounted, setIsMounted] = useState(false);
 
-  const { isSignedIn, sessionId, userId } = useAuth();
-  useEffect(() => setIsMounted(true));
+  const { isSignedIn } = useAuth();
+  useEffect(() => setIsMounted(true), []);
   useEffect(() => {
     if (!isSignedIn) {
       //   redirect("/sign-in");

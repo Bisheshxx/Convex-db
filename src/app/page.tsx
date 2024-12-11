@@ -1,9 +1,7 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import SignUp from "@/Auth/Signup-page";
-import { useMutation, useQuery } from "convex/react";
+import { useMutation } from "convex/react";
 import { api } from "../../convex/_generated/api";
-import { SignIn } from "@clerk/nextjs";
 import { useEffect } from "react";
 // import { api } from "../convex/_generated/api";
 
