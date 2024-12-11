@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "../ui/button";
 import { Avatar, AvatarFallback } from "@radix-ui/react-avatar";
+import { UserButton, UserProfile } from "@clerk/nextjs";
 
 const Navigation = () => {
   return (
@@ -45,10 +46,10 @@ const Navigation = () => {
           </Link>
         </nav>
         <div className="flex items-center gap-4">
-          <DropdownMenu>
+          <UserButton />
+          {/* <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" size="icon" className="rounded-full">
-                {/* <SearchIcon className="h-5 w-5 text-gray-500 dark:text-gray-400" /> */}
                 <Avatar>
                   <AvatarFallback>S</AvatarFallback>
                 </Avatar>
@@ -67,7 +68,7 @@ const Navigation = () => {
                 <DropdownMenuItem>Logout</DropdownMenuItem>
               </DropdownMenuGroup>
             </DropdownMenuContent>
-          </DropdownMenu>
+          </DropdownMenu> */}
         </div>
       </div>
     </header>
