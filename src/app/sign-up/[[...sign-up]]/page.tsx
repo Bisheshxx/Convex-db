@@ -31,7 +31,6 @@ type FormData = z.infer<typeof signUpSchema>;
 
 const SignUpPage = () => {
   const [pendingVerification, setPendingVerification] = useState(false);
-  const [code, setCode] = useState("");
 
   const {
     register,
@@ -74,25 +73,7 @@ const SignUpPage = () => {
       throw new Error(String(error));
     }
   };
-  const onPressVerify = async (e: React.FocusEvent) => {
-    e.preventDefault();
-    if (!isLoaded) {
-      return;
-    }
-    try {
-      const completeSignUp = await signUp.attemptEmailAddressVerification({
-        code,
-      });
-      if (completeSignUp.status === "complete") {
-        await setActive({ session: completeSignUp.createdSessionId });
-        router.push("/");
-      }
-      if (completeSignUp.status !== "complete") {
-      }
-    } catch (error) {
-      throw new Error(String(error));
-    }
-  };
+
   if (!isLoaded) {
     return null;
   }
