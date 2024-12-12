@@ -15,7 +15,7 @@ export default function Home() {
   const tasks = useQuery(api.tasks.getTasksByClassCode, {
     classCode: (user && (user.unsafeMetadata.classroomCode as string)) || "",
   });
-  console.log(tasks);
+  const updateTask = useMutation(api.tasks.updateTask);
   useEffect(() => {
     if (user && user.unsafeMetadata.type && user.unsafeMetadata.classroomCode) {
       storeUser({
@@ -26,6 +26,13 @@ export default function Home() {
   }, [user]);
   return (
     <div className="h-full w-full container mx-auto">
+      <Button
+        onClick={() =>
+          updateTask({ id: "1", title: "tesing", description: "desc" })
+        }
+      >
+        Testing
+      </Button>
       <div>
         <div className="text-xl font-bold w-full flex justify-center p-6">
           {" "}

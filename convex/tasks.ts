@@ -28,12 +28,6 @@ export const createTask = mutation({
   },
 });
 
-// export const get = query({
-//     args: {},
-//     handler: async (ctx) => {
-//       return await ctx.db.query("tasks").collect();
-//     },
-//   });
 export const getTasksByClassCode = query({
   args: {
     classCode: v.string(),
@@ -46,3 +40,48 @@ export const getTasksByClassCode = query({
       .collect();
   },
 });
+
+export const updateTask = mutation({
+  args: {
+    id: v.string(),
+    title: v.string(),
+    description: v.string(),
+  },
+  handler: async (
+    ctx,
+    args: { id: string; title: string; description: string }
+  ) => {
+    // await ctx.db.patch("tasks", args);
+    // const res = await ctx.db.patch("task", args);
+    // try {
+    //     await ctx.db.patch("task", args.taskId, updates);
+    // } catch (error) {
+    //     throw new Error("Some thing went wrong while updating the task!");
+    // }
+  },
+});
+// export const editTask = mutation({
+//   args: {
+//     taskId: v.id("tasks"), // ID of the task to edit
+//     updates: v.object({
+//       // Object containing the fields to update
+//       title: v.optional(v.string()), // Optional title update
+//       description: v.optional(v.string()), // Optional description update
+//       status: v.optional(v.string()), // Optional status update
+//     }),
+//   },
+//   handler: async (ctx, args) => {
+//     const { taskId, updates } = args;
+
+//     // Fetch the existing task
+//     const task = await ctx.db.get(taskId);
+//     if (!task) {
+//       throw new Error("Task not found");
+//     }
+
+//     // Apply the updates to the task
+//     await ctx.db.patch(taskId, updates);
+
+//     return { success: true, message: "Task updated successfully." };
+//   },
+// });

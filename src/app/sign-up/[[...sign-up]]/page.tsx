@@ -24,7 +24,6 @@ import { z } from "zod";
 import { Controller } from "react-hook-form";
 import { useSignUp } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
-import { IClerkError } from "@/Types";
 import Verification from "@/components/Authentication/Verification";
 
 type FormData = z.infer<typeof signUpSchema>;
