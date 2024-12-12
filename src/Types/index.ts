@@ -14,3 +14,9 @@ export interface IErrorClerk {
 export interface IMetaClerk {
   paramName: string;
 }
+
+export interface IUsers {
+  email?: string;
+  userType?: "student" | "teacher";
+  classCode?: string;
+}

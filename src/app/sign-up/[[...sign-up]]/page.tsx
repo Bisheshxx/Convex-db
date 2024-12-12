@@ -57,7 +57,6 @@ const SignUpPage = () => {
       return;
     }
     const { confirmPassword, ...formData } = data;
-    console.log("Form Data:", formData);
     try {
       await signUp?.create({
         emailAddress: formData.email,

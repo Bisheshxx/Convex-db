@@ -20,3 +20,7 @@ export const signUpSchema = z
 export const emailverificationSchema = z.object({
   code: z.string().min(1, "Verification code cannot be empty"),
 });
+export const taskSchema = z.object({
+  title: z.string().min(1, "Title cannot be empty"),
+  description: z.string().min(1, "Description cannot be empty"),
+});
