@@ -10,11 +10,13 @@ export default clerkMiddleware(async (auth, request) => {
   // if (!isPublicRoute(request)) {
   //   await auth.protect();
   // }
+
+  //checks if user is logged in to protect routes
   if (!userId && !isPublicRoute(request)) {
-    // Add custom logic to run before redirecting
     await auth.protect();
-    // return redirectToSignIn();
   }
+
+  //prevents user from accessing login and signup pages when logged in
   if (userId && isPublicRoute(request)) {
     return NextResponse.redirect(new URL("/", request.url));
   }
