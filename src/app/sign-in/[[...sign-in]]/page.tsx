@@ -28,7 +28,6 @@ const SignInPage = () => {
   });
 
   const onSubmit = async (data: FormData) => {
-    console.log(data);
     if (!isLoaded) {
       return;
     }

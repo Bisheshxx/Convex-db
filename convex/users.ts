@@ -1,5 +1,5 @@
 import { v } from "convex/values";
-import { mutation } from "./_generated/server";
+import { mutation, query } from "./_generated/server";
 export const store = mutation({
   args: {
     userType: v.string(),
@@ -28,5 +28,27 @@ export const store = mutation({
       classCode: classCode as string,
     });
     return userID;
+  },
+});
+export const getStudents = query({
+  args: {
+    classCode: v.string(),
+  },
+  handler: async (ctx, args) => {
+    try {
+      const student = await ctx.db
+        .query("users")
+        // .filter(q => q.eq(q.field("userType"), "student"))
+        .filter(q =>
+          q.and(
+            q.eq(q.field("userType"), "student"),
+            q.eq(q.field("classCode"), args.classCode) // Add your class code filter here
+          )
+        )
+        .collect();
+      return student;
+    } catch (error) {
+      console.log(JSON.stringify(error));
+    }
   },
 });

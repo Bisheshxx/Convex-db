@@ -12,6 +12,7 @@ import Navigation from "@/components/NavigationBar";
 
 export default function Home() {
   const storeUser = useMutation(api.users.store);
+
   const { user } = useUser();
   const tasks = useQuery(api.tasks.getTasksByClassCode, {
     classCode: (user && (user.unsafeMetadata.classroomCode as string)) || "",
@@ -27,7 +28,6 @@ export default function Home() {
   }, [user]);
   return (
     <>
-      <Navigation />
       <div className="h-full w-full container mx-auto">
         {/* <Button
         onClick={() =>

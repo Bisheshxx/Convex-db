@@ -26,7 +26,6 @@ const Verification = () => {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-    control,
     reset,
   } = useForm<FormData>({
     resolver: zodResolver(emailverificationSchema), // Use Zod resolver for validation

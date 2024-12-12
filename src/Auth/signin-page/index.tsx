@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/button";
 import { FieldErrors } from "react-hook-form";
 import { signinSchema } from "@/Validator";
 import { z } from "zod";
+import Link from "next/link";
 type FormData = z.infer<typeof signinSchema>;
 
 interface SignInComponentProps {
@@ -51,7 +52,6 @@ const SignInComponent = ({
                 placeholder="Enter your Email"
                 {...register("identifier")}
               />
-
               {errors && (
                 <div className="text-xs text-rose-700">
                   {errors.identifier?.message}
@@ -76,6 +76,7 @@ const SignInComponent = ({
               )}
             </div>
           </div>
+          <Link href={"/sign-up"}>Don't Have an account?</Link>
         </CardContent>
         <CardFooter className="flex justify-between">
           <Button variant="outline">Cancel</Button>

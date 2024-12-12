@@ -23,7 +23,10 @@ const Providers = ({ children }: IProviderProps) => {
   return (
     <ConvexProviderWithClerk useAuth={useAuth} client={convex}>
       <AuthLoading>Loading...</AuthLoading>
-      <Authenticated>{children}</Authenticated>
+      <Authenticated>
+        <Navigation />
+        {children}
+      </Authenticated>
       <Unauthenticated>{children}</Unauthenticated>
     </ConvexProviderWithClerk>
     // </ClerkProvider>

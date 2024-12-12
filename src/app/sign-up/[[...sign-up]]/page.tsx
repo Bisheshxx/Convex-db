@@ -30,7 +30,6 @@ type FormData = z.infer<typeof signUpSchema>;
 
 const SignUpPage = () => {
   const [pendingVerification, setPendingVerification] = useState(false);
-
   const {
     register,
     handleSubmit,
@@ -47,10 +46,7 @@ const SignUpPage = () => {
       classroomCode: "",
     },
   });
-  const { isLoaded, signUp, setActive } = useSignUp();
-
-  const router = useRouter();
-
+  const { isLoaded, signUp } = useSignUp();
   const onSubmit = async (data: FormData) => {
     if (!isLoaded) {
       return;
@@ -71,7 +67,6 @@ const SignUpPage = () => {
       throw new Error(String(error));
     }
   };
-
   if (!isLoaded) {
     return null;
   }
