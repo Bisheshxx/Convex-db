@@ -20,3 +20,12 @@ export interface IUsers {
   userType?: "student" | "teacher";
   classCode?: string;
 }
+export interface Tasks {
+  _creationTime: number;
+  _id: string;
+  classCode: string;
+  creatorEmail: string;
+  creatorID: string;
+  description: string;
+  title: string;
+}

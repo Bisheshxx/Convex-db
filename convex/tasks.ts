@@ -1,5 +1,5 @@
 import { v } from "convex/values";
-import { mutation } from "./_generated/server";
+import { mutation, query } from "./_generated/server";
 import { Task } from "./types";
 export const createTask = mutation({
   args: {
@@ -25,5 +25,24 @@ export const createTask = mutation({
     } catch (error) {
       throw new Error("Some thing went wrong!");
     }
+  },
+});
+
+// export const get = query({
+//     args: {},
+//     handler: async (ctx) => {
+//       return await ctx.db.query("tasks").collect();
+//     },
+//   });
+export const getTasksByClassCode = query({
+  args: {
+    classCode: v.string(),
+  },
+  //   .filter((q) => q.eq(q.field("taskListId"), args.taskListId))
+  handler: async (ctx, args) => {
+    return await ctx.db
+      .query("task")
+      .filter(q => q.eq(q.field("classCode"), args.classCode))
+      .collect();
   },
 });

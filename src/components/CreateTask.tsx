@@ -19,6 +19,8 @@ import { useUser } from "@clerk/nextjs";
 import { createTask } from "../../convex/tasks";
 import { useMutation } from "convex/react";
 import { api } from "../../convex/_generated/api";
+import { Plus } from "lucide-react";
+import { Card } from "./ui/card";
 
 type FormData = z.infer<typeof taskSchema>;
 
@@ -56,10 +58,12 @@ const CreateTaskDialog = () => {
   };
 
   return (
-    <div>
+    <div className="h-full w-full">
       <Dialog>
         <DialogTrigger asChild>
-          <Button variant="outline">Show Dialog</Button>
+          <Card className="h-full w-full flex justify-center items-center">
+            <Plus />
+          </Card>
         </DialogTrigger>
         <DialogContent>
           <DialogHeader>
