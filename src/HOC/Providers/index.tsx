@@ -12,30 +12,18 @@ import Navigation from "@/components/NavigationBar";
 interface IProviderProps {
   children: React.ReactNode;
 }
-const convexUrl = process.env.NEXT_PUBLIC_CONVEX_URL;
-const convex = new ConvexReactClient(convexUrl!);
+
 const Providers = ({ children }: IProviderProps) => {
+  const convexUrl = process.env.NEXT_PUBLIC_CONVEX_URL;
+  const convex = new ConvexReactClient(convexUrl!);
   const [isMounted, setIsMounted] = useState(false);
 
-  const { isSignedIn } = useAuth();
   useEffect(() => setIsMounted(true), []);
-  useEffect(() => {
-    if (!isSignedIn) {
-      //   redirect("/sign-in");
-      console.log(isSignedIn);
-    }
-  }, [isSignedIn]);
-  if (!isMounted) return null;
+  if (!isMounted) return <>loading</>;
   return (
-    // <ClerkProvider
-    // //   publishableKey={process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}
-    // >
     <ConvexProviderWithClerk useAuth={useAuth} client={convex}>
       <AuthLoading>Loading...</AuthLoading>
-      <Authenticated>
-        <Navigation />
-        {children}
-      </Authenticated>
+      <Authenticated>{children}</Authenticated>
       <Unauthenticated>{children}</Unauthenticated>
     </ConvexProviderWithClerk>
     // </ClerkProvider>

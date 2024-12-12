@@ -38,7 +38,7 @@ const SignUpPage = () => {
     control,
     reset,
   } = useForm<FormData>({
-    resolver: zodResolver(signUpSchema), // Use Zod resolver for validation
+    resolver: zodResolver(signUpSchema),
     defaultValues: {
       email: "",
       password: "",

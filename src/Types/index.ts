@@ -29,3 +29,20 @@ export interface Tasks {
   description: string;
   title: string;
 }
+
+export interface ClerkError {
+  status: number;
+  clerkError: boolean;
+  errors: ClerkErrorType[];
+}
+
+export interface ClerkErrorType {
+  code: string;
+  message: string;
+  longMessage: string;
+  meta: Meta;
+}
+
+export interface Meta {
+  paramName: string;
+}

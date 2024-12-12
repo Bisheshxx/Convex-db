@@ -24,3 +24,11 @@ export const taskSchema = z.object({
   title: z.string().min(1, "Title cannot be empty"),
   description: z.string().min(1, "Description cannot be empty"),
 });
+
+export const signinSchema = z.object({
+  identifier: z
+    .string()
+    .min(1, "Email cannot be empty")
+    .email("Invalid email address"),
+  password: z.string().min(6, "Password must be at least 6 characters"),
+});
