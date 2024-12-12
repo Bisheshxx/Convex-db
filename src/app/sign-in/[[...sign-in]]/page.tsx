@@ -19,7 +19,6 @@ const SignInPage = () => {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-    setError,
   } = useForm<FormData>({
     resolver: zodResolver(signinSchema),
     defaultValues: {
@@ -43,15 +42,9 @@ const SignInPage = () => {
       if (error.clerkError) {
         setClerkError(error.errors[0].message);
       }
-      console.log(error.errors);
-
       console.log(JSON.stringify(error));
-      // console.error(error);
     }
   };
-  // if (!isLoaded) {
-  //   return null;
-  // }
   return (
     <div className="h-full w-full flex justify-center aligh-center items-center">
       <SignInComponent
