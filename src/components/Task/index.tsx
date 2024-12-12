@@ -8,22 +8,22 @@ import {
   CardHeader,
   CardTitle,
 } from "../ui/card";
-const covertDate = (timestampMs: any) => {
-  let date = new Date(timestampMs);
-  return date.toISOString();
-};
+import { convertDate } from "@/utils/date-time";
+
 interface IProps {
   task: Tasks;
 }
 
 const Task = ({ task }: IProps) => {
   return (
-    <Card key={task._id}>
+    <Card key={task._id} className="relative">
       <CardHeader>
         <CardTitle>{task.title}</CardTitle>
       </CardHeader>
-      <CardContent>{task.description}</CardContent>
-      <CardFooter>{covertDate(task._creationTime)}</CardFooter>
+      <CardContent className="pb-10">{task.description}</CardContent>
+      <CardFooter className="text-sm absolute bottom-0 left-0 w-full p-0 px-6 py-2">
+        {convertDate(task._creationTime)}
+      </CardFooter>
     </Card>
   );
 };

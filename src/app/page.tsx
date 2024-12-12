@@ -3,13 +3,11 @@ import { Button } from "@/components/ui/button";
 import { useMutation, useQuery } from "convex/react";
 import { api } from "../../convex/_generated/api";
 import { useEffect } from "react";
-import { useAuth, useUser } from "@clerk/nextjs";
+import { useUser } from "@clerk/nextjs";
 import CreateTaskDialog from "@/components/CreateTask";
 import { Tasks } from "@/Types";
-import { Card } from "@/components/ui/card";
 import Task from "@/components/Task";
-import { Plus } from "lucide-react";
-// import { api } from "../convex/_generated/api";
+import { CircleSlash } from "lucide-react";
 
 export default function Home() {
   const storeUser = useMutation(api.users.store);
@@ -26,23 +24,28 @@ export default function Home() {
       });
     }
   }, [user]);
-
   return (
-    <div className="h-full w-full">
+    <div className="h-full w-full container mx-auto">
       <div>
-        <div className="">
+        <div className="text-xl font-bold w-full flex justify-center p-6">
           {" "}
-          Class number: {user?.unsafeMetadata.classroomCode as string}
+          Tasks for Class number: {user?.unsafeMetadata.classroomCode as string}
         </div>
       </div>
       <div className="">
-        <div>Task</div>
         <div className="grid grid-cols-4 gap-4">
-          {tasks?.map((task: Tasks) => <Task task={task} />)}
+          {tasks && tasks?.length > 0 ? (
+            tasks?.map((task: Tasks) => <Task key={task._id} task={task} />)
+          ) : (
+            <div className="col-span-4 h-96 flex justify-center items-center">
+              <div className="flex gap-4 text-[64px] justify-center items-center">
+                <CircleSlash size={64} /> No Tasks
+              </div>
+            </div>
+          )}
           {user?.unsafeMetadata?.type === "teacher" && <CreateTaskDialog />}
         </div>
       </div>
-      <div>{/* <Button>Create task</Button> */}</div>
     </div>
   );
 }

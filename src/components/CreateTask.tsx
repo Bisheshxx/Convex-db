@@ -6,6 +6,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
+  DialogClose, // Ensure this is imported
 } from "@/components/ui/dialog";
 import { Button } from "./ui/button";
 import { Label } from "@/components/ui/label";
@@ -16,22 +17,22 @@ import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useUser } from "@clerk/nextjs";
-import { createTask } from "../../convex/tasks";
 import { useMutation } from "convex/react";
 import { api } from "../../convex/_generated/api";
 import { Plus } from "lucide-react";
 import { Card } from "./ui/card";
+import { useRef } from "react"; // Add this import
 
 type FormData = z.infer<typeof taskSchema>;
 
 const CreateTaskDialog = () => {
   const { user } = useUser();
-  //   const { type, classroomCode } = user?.unsafeMetadata;
+  const dialogCloseRef = useRef<HTMLButtonElement>(null);
+
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-    control,
     reset,
   } = useForm<FormData>({
     resolver: zodResolver(taskSchema),
@@ -45,23 +46,28 @@ const CreateTaskDialog = () => {
   const onSubmit = async (data: FormData) => {
     if (!user || !user.unsafeMetadata?.classroomCode) {
       console.error("User or classroom code is missing");
-      return; // Or handle the error appropriately
+      return;
     }
     try {
-      const res = await createTask({
+      await createTask({
         title: data.title,
         description: data.description,
         classCode: user!.unsafeMetadata!.classroomCode as string,
       });
-      console.log(res);
-    } catch (error) {}
+      reset();
+      if (dialogCloseRef.current) {
+        dialogCloseRef.current.click();
+      }
+    } catch (error) {
+      console.error("Error creating task:", error);
+    }
   };
 
   return (
     <div className="h-full w-full">
       <Dialog>
         <DialogTrigger asChild>
-          <Card className="h-full w-full flex justify-center items-center">
+          <Card className="h-full w-full flex justify-center items-center min-h-48">
             <Plus />
           </Card>
         </DialogTrigger>
@@ -75,18 +81,30 @@ const CreateTaskDialog = () => {
                     <Label htmlFor="name">Task Title</Label>
                     <Input
                       id="name"
-                      placeholder="Enter your Email"
+                      placeholder="Enter your task title"
                       {...register("title")}
                     />
                   </div>
                   <div className="flex flex-col space-y-1.5">
-                    <Label htmlFor="name">Description</Label>
+                    <Label htmlFor="description">Description</Label>
                     <Textarea
+                      id="description"
                       placeholder="Type your task details here."
                       {...register("description")}
                     />
                   </div>
-                  <Button type="submit"> Create task </Button>
+                  <div className="flex w-full justify-center">
+                    <div className="flex gap-2">
+                      <DialogClose ref={dialogCloseRef} asChild>
+                        <Button type="button" variant="outline">
+                          Cancel
+                        </Button>
+                      </DialogClose>
+                      <Button type="submit" disabled={isSubmitting}>
+                        {isSubmitting ? "Creating..." : "Create task"}
+                      </Button>
+                    </div>
+                  </div>
                 </div>
               </form>
             </DialogDescription>
