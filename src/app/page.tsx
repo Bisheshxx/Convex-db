@@ -7,6 +7,8 @@ import Task from "@/components/Task";
 import { CircleSlash } from "lucide-react";
 import useUserData from "@/hooks/useUserData";
 import useTasks from "@/hooks/useTasks";
+import Spinner from "@/components/Spinner";
+import Navigation from "@/components/NavigationBar";
 
 export default function Home() {
   const { user } = useUser();
@@ -24,6 +26,7 @@ export default function Home() {
   }, [user]);
   return (
     <>
+      <Navigation />
       <div className="h-full w-full container mx-auto">
         <div>
           <div className="text-xl font-bold w-full flex justify-center p-6">
@@ -48,7 +51,7 @@ export default function Home() {
             </div>
           </div>
         ) : (
-          <>Loading</>
+          <Spinner />
         )}
       </div>
     </>

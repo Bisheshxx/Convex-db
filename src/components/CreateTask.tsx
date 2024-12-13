@@ -84,6 +84,11 @@ const CreateTaskDialog = () => {
                       placeholder="Enter your task title"
                       {...register("title")}
                     />
+                    {errors && (
+                      <div className="text-xs text-rose-700">
+                        {errors.title?.message}
+                      </div>
+                    )}
                   </div>
                   <div className="flex flex-col space-y-1.5">
                     <Label htmlFor="description">Description</Label>
@@ -92,6 +97,11 @@ const CreateTaskDialog = () => {
                       placeholder="Type your task details here."
                       {...register("description")}
                     />
+                    {errors && (
+                      <div className="text-xs text-rose-700">
+                        {errors.description?.message}
+                      </div>
+                    )}
                   </div>
                   <div className="flex w-full justify-center">
                     <div className="flex gap-2">

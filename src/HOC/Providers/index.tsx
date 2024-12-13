@@ -9,6 +9,7 @@ import {
 } from "convex/react";
 import { ConvexProviderWithClerk } from "convex/react-clerk";
 import Navigation from "@/components/NavigationBar";
+import Spinner from "@/components/Spinner";
 interface IProviderProps {
   children: React.ReactNode;
 }
@@ -19,14 +20,14 @@ const Providers = ({ children }: IProviderProps) => {
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => setIsMounted(true), []);
-  if (!isMounted) return <>loading</>;
   return (
     <ConvexProviderWithClerk useAuth={useAuth} client={convex}>
-      <AuthLoading>Loading...</AuthLoading>
-      <Authenticated>
-        <Navigation />
-        {children}
-      </Authenticated>
+      <AuthLoading>
+        <div className="h-full w-full flex justify-center items-center">
+          <Spinner height="50" width="50" />
+        </div>
+      </AuthLoading>
+      <Authenticated>{children}</Authenticated>
       <Unauthenticated>{children}</Unauthenticated>
     </ConvexProviderWithClerk>
     // </ClerkProvider>

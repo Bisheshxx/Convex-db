@@ -13,6 +13,7 @@ import { FieldErrors, UseFormRegister } from "react-hook-form";
 import { signinSchema } from "@/Validator";
 import { z } from "zod";
 import Link from "next/link";
+import { PasswordInput } from "@/components/ui/passwordinput";
 type FormData = z.infer<typeof signinSchema>;
 
 interface SignInComponentProps {
@@ -60,11 +61,10 @@ const SignInComponent = ({
             </div>
             <div className="flex flex-col space-y-1.5">
               <Label htmlFor="name">Password</Label>
-              <Input
-                id="password"
-                placeholder="Enter your Password"
-                type="password"
-                {...register("password")}
+              <PasswordInput
+              // id="password"
+              // placeholder="Enter your Password"
+              // {...register("password")}
               />
               {errors && (
                 <div className="text-xs text-rose-700">
@@ -76,7 +76,9 @@ const SignInComponent = ({
               )}
             </div>
           </div>
-          <Link href={"/sign-up"}>{`Don't Have an account?`}</Link>
+          <Link href={"/sign-up"}>
+            <span className="text-xs underline">{`Don't Have an account?`}</span>
+          </Link>
         </CardContent>
         <CardFooter className="flex justify-between">
           <Button variant="outline">Cancel</Button>

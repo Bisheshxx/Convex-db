@@ -12,29 +12,7 @@ const Navigation = () => {
           <h1>Logo</h1>
           <span className="sr-only">Acme Inc</span>
         </Link>
-        <nav className="hidden items-center gap-6 text-sm font-medium md:flex">
-          <Link
-            href="#"
-            className="text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
-            prefetch={false}
-          >
-            Home
-          </Link>
-          <Link
-            href="#"
-            className="text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
-            prefetch={false}
-          >
-            Students
-          </Link>
-          <Link
-            href="#"
-            className="text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
-            prefetch={false}
-          >
-            Contact
-          </Link>
-        </nav>
+
         <div className="flex items-center gap-4">
           <UserButton />
           {/* <DropdownMenu>
