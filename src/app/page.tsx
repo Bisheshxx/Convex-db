@@ -39,7 +39,7 @@ export default function Home() {
         </div>
         {!isLoading ? (
           <div className="">
-            <div className="grid grid-cols-4 gap-4">
+            <div className="grid md:grid-cols-4 grid-cols-1 gap-4">
               {tasks && tasks?.length > 0 ? (
                 tasks?.map((task: Tasks) => <Task key={task._id} task={task} />)
               ) : (
@@ -63,13 +63,15 @@ export default function Home() {
               {user?.unsafeMetadata?.type === "teacher" &&
                 tasks &&
                 tasks?.length > 0 && (
-                  <CreateTaskDialog
-                    DialogInitiator={
-                      <Card className="h-full w-full flex justify-center items-center min-h-48">
-                        <Plus />
-                      </Card>
-                    }
-                  />
+                  <div className="mb-4">
+                    <CreateTaskDialog
+                      DialogInitiator={
+                        <Card className="h-full w-full flex justify-center items-center min-h-48">
+                          <Plus />
+                        </Card>
+                      }
+                    />
+                  </div>
                 )}
             </div>
           </div>
