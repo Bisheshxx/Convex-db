@@ -38,7 +38,7 @@ export default function Home() {
           </div>
         </div>
         {!isLoading ? (
-          <div className="">
+          <div className="container mx-auto">
             <div className="grid md:grid-cols-4 grid-cols-1 gap-4">
               {tasks && tasks?.length > 0 ? (
                 tasks?.map((task: Tasks) => <Task key={task._id} task={task} />)
@@ -63,7 +63,7 @@ export default function Home() {
               {user?.unsafeMetadata?.type === "teacher" &&
                 tasks &&
                 tasks?.length > 0 && (
-                  <div className="mb-4">
+                  <div className="sm:mb-4">
                     <CreateTaskDialog
                       DialogInitiator={
                         <Card className="h-full w-full flex justify-center items-center min-h-48">
