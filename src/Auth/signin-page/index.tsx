@@ -62,9 +62,8 @@ const SignInComponent = ({
             <div className="flex flex-col space-y-1.5">
               <Label htmlFor="name">Password</Label>
               <PasswordInput
-              // id="password"
-              // placeholder="Enter your Password"
-              // {...register("password")}
+                placeholder="Enter your Password"
+                {...register("password")}
               />
               {errors && (
                 <div className="text-xs text-rose-700">

@@ -9,7 +9,7 @@ import { cn } from "@/lib/utils";
 
 const PasswordInput = React.forwardRef<HTMLInputElement, InputProps>(
   ({ className, ...props }, ref) => {
-    const [showPassword, setShowPassword] = React.useState(true);
+    const [showPassword, setShowPassword] = React.useState(false);
     const disabled =
       props.value === "" || props.value === undefined || props.disabled;
 
@@ -21,23 +21,6 @@ const PasswordInput = React.forwardRef<HTMLInputElement, InputProps>(
           ref={ref}
           {...props}
         />
-        {/* <Button
-          type="button"
-          variant="ghost"
-          size="sm"
-          className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
-          onClick={() => console.log("object")}
-          disabled={disabled}
-        >
-          {showPassword && !disabled ? (
-            <EyeIcon className="h-4 w-4" aria-hidden="true" />
-          ) : (
-            <EyeOffIcon className="h-4 w-4" aria-hidden="true" />
-          )}
-          <span className="sr-only">
-            {showPassword ? "Hide password" : "Show password"}
-          </span>
-        </Button> */}
         <Button
           type="button"
           variant="ghost"

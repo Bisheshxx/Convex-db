@@ -1,9 +1,9 @@
 import { useMutation } from "convex/react";
-import React from "react";
 import { api } from "../../convex/_generated/api";
 
 const useUserData = () => {
   const storeUser = useMutation(api.users.store);
+
   return {
     storeUser,
   };
