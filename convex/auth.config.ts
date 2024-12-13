@@ -1,4 +1,5 @@
-export default {
+const authConfig = {
+  // Assign the object to a variable
   providers: [
     {
       domain: "https://composed-beagle-54.clerk.accounts.dev/",
@@ -6,3 +7,5 @@ export default {
     },
   ],
 };
+
+export { authConfig as default }; // Use named export while keeping the default export

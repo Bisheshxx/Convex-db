@@ -9,14 +9,14 @@ import {
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { FieldErrors } from "react-hook-form";
+import { FieldErrors, UseFormRegister } from "react-hook-form";
 import { signinSchema } from "@/Validator";
 import { z } from "zod";
 import Link from "next/link";
 type FormData = z.infer<typeof signinSchema>;
 
 interface SignInComponentProps {
-  register: Function;
+  register: UseFormRegister<FormData>;
   handleSubmit: (
     onValid: (data: FormData) => void,
     onInvalid?: (errors: FieldErrors<FormData>) => void
@@ -76,7 +76,7 @@ const SignInComponent = ({
               )}
             </div>
           </div>
-          <Link href={"/sign-up"}>Don't Have an account?</Link>
+          <Link href={"/sign-up"}>{`Don't Have an account?`}</Link>
         </CardContent>
         <CardFooter className="flex justify-between">
           <Button variant="outline">Cancel</Button>

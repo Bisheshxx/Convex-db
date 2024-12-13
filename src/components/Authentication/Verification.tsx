@@ -18,8 +18,11 @@ import { useSignUp } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 
 type FormData = z.infer<typeof emailverificationSchema>;
+interface IProps {
+  setPendingVerification: (state: boolean) => void;
+}
 
-const Verification = ({ setPendingVerification }: any) => {
+const Verification = ({ setPendingVerification }: IProps) => {
   const { isLoaded, signUp, setActive } = useSignUp();
   const router = useRouter();
   const {

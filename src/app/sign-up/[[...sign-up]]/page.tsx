@@ -17,20 +17,20 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signUpSchema } from "@/Validator";
 import { z } from "zod";
 import { Controller } from "react-hook-form";
 import { useSignUp } from "@clerk/nextjs";
-import { useRouter } from "next/navigation";
 import Verification from "@/components/Authentication/Verification";
+import { ClerkError } from "@/Types";
 
 type FormData = z.infer<typeof signUpSchema>;
 
 const SignUpPage = () => {
   const [pendingVerification, setPendingVerification] = useState(false);
-  const [clerkError, setClerkError] = useState(false);
+  const [clerkError, setClerkError] = useState("");
   const {
     register,
     handleSubmit,
@@ -64,11 +64,16 @@ const SignUpPage = () => {
       });
       await signUp?.prepareEmailAddressVerification({ strategy: "email_code" });
       setPendingVerification(true);
-    } catch (error: any) {
-      if (error.clerkError) {
-        setClerkError(error.errors[0].message);
+    } catch (error: unknown) {
+      // Type assertion to ClerkError
+      const clerkError = error as ClerkError;
+
+      if (clerkError.clerkError) {
+        setClerkError(clerkError.errors[0].message);
+      } else {
+        setClerkError("An unexpected error occurred. Please try again.");
       }
-      // throw new Error(String(error));
+      console.log(JSON.stringify(error));
     }
   };
   if (!isLoaded) {
@@ -162,7 +167,7 @@ const SignUpPage = () => {
                         {errors.classroomCode.message}
                       </p>
                     )}
-                    {clerkError && (
+                    {!!clerkError && (
                       <p className="text-xs text-rose-700">{clerkError}</p>
                     )}
                   </div>
@@ -177,7 +182,9 @@ const SignUpPage = () => {
                 >
                   Cancel
                 </Button>
-                <Button type="submit">Sign Up</Button>
+                <Button type="submit" disabled={isSubmitting}>
+                  {isSubmitting ? "Submitting..." : "Sign Up"}
+                </Button>
               </CardFooter>
             </Card>
           </form>

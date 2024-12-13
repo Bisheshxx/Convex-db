@@ -2,7 +2,7 @@
 import SignInComponent from "@/Auth/signin-page";
 import { ClerkError } from "@/Types";
 import { signinSchema } from "@/Validator";
-import { SignIn, useSignIn } from "@clerk/nextjs";
+import { useSignIn } from "@clerk/nextjs";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
@@ -37,9 +37,14 @@ const SignInPage = () => {
         await setActive({ session: signInAttempt.createdSessionId });
         router.push("/");
       }
-    } catch (error: any) {
-      if (error.clerkError) {
-        setClerkError(error.errors[0].message);
+    } catch (error: unknown) {
+      // Type assertion to ClerkError
+      const clerkError = error as ClerkError;
+
+      if (clerkError.clerkError) {
+        setClerkError(clerkError.errors[0].message);
+      } else {
+        setClerkError("An unexpected error occurred. Please try again.");
       }
       console.log(JSON.stringify(error));
     }
