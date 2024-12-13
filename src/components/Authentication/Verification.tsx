@@ -19,7 +19,7 @@ import { useRouter } from "next/navigation";
 
 type FormData = z.infer<typeof emailverificationSchema>;
 
-const Verification = () => {
+const Verification = ({ setPendingVerification }: any) => {
   const { isLoaded, signUp, setActive } = useSignUp();
   const router = useRouter();
   const {
@@ -74,7 +74,13 @@ const Verification = () => {
             </div>
           </CardContent>
           <CardFooter className="flex justify-between">
-            <Button variant="outline" onClick={() => reset()}>
+            <Button
+              variant="outline"
+              onClick={() => {
+                setPendingVerification(false);
+                reset();
+              }}
+            >
               Cancel
             </Button>
             <Button type="submit">Verify</Button>

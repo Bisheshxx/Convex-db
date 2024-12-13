@@ -9,15 +9,15 @@ import { Tasks } from "@/Types";
 import Task from "@/components/Task";
 import { CircleSlash } from "lucide-react";
 import Navigation from "@/components/NavigationBar";
+import useUserData from "@/hooks/useUserData";
+import useTasks from "@/hooks/useTasks";
 
 export default function Home() {
-  const storeUser = useMutation(api.users.store);
-
   const { user } = useUser();
-  const tasks = useQuery(api.tasks.getTasksByClassCode, {
+  const { tasks } = useTasks({
     classCode: (user && (user.unsafeMetadata.classroomCode as string)) || "",
   });
-  const updateTask = useMutation(api.tasks.updateTask);
+  const { storeUser } = useUserData();
   useEffect(() => {
     if (user && user.unsafeMetadata.type && user.unsafeMetadata.classroomCode) {
       storeUser({

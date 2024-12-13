@@ -13,7 +13,7 @@ type FormData = z.infer<typeof signinSchema>;
 
 const SignInPage = () => {
   const { isLoaded, signIn, setActive } = useSignIn();
-  const [ClerkError, setClerkError] = useState("");
+  const [clerkError, setClerkError] = useState("");
   const router = useRouter();
   const {
     register,
@@ -52,7 +52,7 @@ const SignInPage = () => {
         errors={errors}
         isSubmitting={isSubmitting}
         onSubmit={onSubmit}
-        ClerkError={ClerkError}
+        ClerkError={clerkError}
       />
     </div>
   );

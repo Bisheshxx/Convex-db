@@ -30,6 +30,7 @@ type FormData = z.infer<typeof signUpSchema>;
 
 const SignUpPage = () => {
   const [pendingVerification, setPendingVerification] = useState(false);
+  const [clerkError, setClerkError] = useState(false);
   const {
     register,
     handleSubmit,
@@ -63,15 +64,18 @@ const SignUpPage = () => {
       });
       await signUp?.prepareEmailAddressVerification({ strategy: "email_code" });
       setPendingVerification(true);
-    } catch (error: unknown) {
-      throw new Error(String(error));
+    } catch (error: any) {
+      if (error.clerkError) {
+        setClerkError(error.errors[0].message);
+      }
+      // throw new Error(String(error));
     }
   };
   if (!isLoaded) {
     return null;
   }
   return (
-    <div className="h-full w-full flex justify-center items-center">
+    <div className="h-full w-full flex flex-col justify-center items-center">
       <div id="clerk-captcha" />
       {!pendingVerification ? (
         <div>
@@ -158,11 +162,19 @@ const SignUpPage = () => {
                         {errors.classroomCode.message}
                       </p>
                     )}
+                    {clerkError && (
+                      <p className="text-xs text-rose-700">{clerkError}</p>
+                    )}
                   </div>
                 </div>
               </CardContent>
               <CardFooter className="flex justify-between">
-                <Button variant="outline" onClick={() => reset()}>
+                <Button
+                  variant="outline"
+                  onClick={() => {
+                    reset();
+                  }}
+                >
                   Cancel
                 </Button>
                 <Button type="submit">Sign Up</Button>
@@ -171,7 +183,7 @@ const SignUpPage = () => {
           </form>
         </div>
       ) : (
-        <Verification />
+        <Verification setPendingVerification={setPendingVerification} />
       )}
     </div>
   );
