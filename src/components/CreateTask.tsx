@@ -25,7 +25,11 @@ import { useRef } from "react"; // Add this import
 
 type FormData = z.infer<typeof taskSchema>;
 
-const CreateTaskDialog = () => {
+interface IProps {
+  DialogInitiator: React.ReactElement;
+}
+
+const CreateTaskDialog = ({ DialogInitiator }: IProps) => {
   const { user } = useUser();
   const dialogCloseRef = useRef<HTMLButtonElement>(null);
 
@@ -66,11 +70,7 @@ const CreateTaskDialog = () => {
   return (
     <div className="h-full w-full">
       <Dialog>
-        <DialogTrigger asChild>
-          <Card className="h-full w-full flex justify-center items-center min-h-48">
-            <Plus />
-          </Card>
-        </DialogTrigger>
+        <DialogTrigger asChild>{DialogInitiator}</DialogTrigger>
         <DialogContent>
           <DialogHeader>
             <DialogTitle>Create Task</DialogTitle>

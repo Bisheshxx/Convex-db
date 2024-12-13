@@ -4,11 +4,13 @@ import { useUser } from "@clerk/nextjs";
 import CreateTaskDialog from "@/components/CreateTask";
 import { Tasks } from "@/Types";
 import Task from "@/components/Task";
-import { CircleSlash } from "lucide-react";
+import { CircleSlash, Plus } from "lucide-react";
 import useUserData from "@/hooks/useUserData";
 import useTasks from "@/hooks/useTasks";
 import Spinner from "@/components/Spinner";
 import Navigation from "@/components/NavigationBar";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 
 export default function Home() {
   const { user } = useUser();
@@ -27,7 +29,7 @@ export default function Home() {
   return (
     <>
       <Navigation />
-      <div className="h-full w-full container mx-auto">
+      <div className="h-fit w-full container mx-auto">
         <div>
           <div className="text-xl font-bold w-full flex justify-center p-6">
             {" "}
@@ -41,13 +43,34 @@ export default function Home() {
               {tasks && tasks?.length > 0 ? (
                 tasks?.map((task: Tasks) => <Task key={task._id} task={task} />)
               ) : (
-                <div className="col-span-4 h-96 flex justify-center items-center">
-                  <div className="flex gap-4 text-[64px] justify-center items-center">
-                    <CircleSlash size={64} /> No Tasks
+                <div className="col-span-4  flex justify-center items-center">
+                  <div className="flex flex-col gap-4 ">
+                    <div className="flex justify-center items-center text-[64px]">
+                      <CircleSlash size={64} /> No Tasks
+                    </div>
+                    <div>
+                      <CreateTaskDialog
+                        DialogInitiator={
+                          <div className="flex justify-center">
+                            <Button>Create a New Task</Button>
+                          </div>
+                        }
+                      />
+                    </div>
                   </div>
                 </div>
               )}
-              {user?.unsafeMetadata?.type === "teacher" && <CreateTaskDialog />}
+              {user?.unsafeMetadata?.type === "teacher" &&
+                tasks &&
+                tasks?.length > 0 && (
+                  <CreateTaskDialog
+                    DialogInitiator={
+                      <Card className="h-full w-full flex justify-center items-center min-h-48">
+                        <Plus />
+                      </Card>
+                    }
+                  />
+                )}
             </div>
           </div>
         ) : (
