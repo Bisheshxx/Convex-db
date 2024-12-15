@@ -1,21 +1,22 @@
-import React from "react";
 import { taskSchema } from "@/Validator";
-import { z } from "zod";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { useUser } from "@clerk/nextjs";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "convex/react";
-import { api } from "../../convex/_generated/api";
-import { useRef } from "react"; // Add this import
-import TaskDialog from "./TaskDialog";
-
+import React, { useRef } from "react";
+import { useForm } from "react-hook-form";
+import { api } from "../../../convex/_generated/api";
+import { z } from "zod";
+import { Tasks } from "@/Types";
+import { Id } from "../../../convex/_generated/dataModel";
+import TaskDialog from "../TaskDialog";
 type FormData = z.infer<typeof taskSchema>;
 
 interface IProps {
+  task: Tasks;
   DialogInitiator: React.ReactElement;
 }
 
-const CreateTaskDialog = ({ DialogInitiator }: IProps) => {
+const UpdateTask = ({ task, DialogInitiator }: IProps) => {
   const { user } = useUser();
   const dialogCloseRef = useRef<HTMLButtonElement>(null);
 
@@ -27,11 +28,11 @@ const CreateTaskDialog = ({ DialogInitiator }: IProps) => {
   } = useForm<FormData>({
     resolver: zodResolver(taskSchema),
     defaultValues: {
-      title: "",
-      description: "",
+      title: task.title,
+      description: task.description,
     },
   });
-  const createTask = useMutation(api.tasks.createTask);
+  const updateTask = useMutation(api.tasks.updateTask);
 
   const onSubmit = async (data: FormData) => {
     if (!user || !user.unsafeMetadata?.classroomCode) {
@@ -39,10 +40,10 @@ const CreateTaskDialog = ({ DialogInitiator }: IProps) => {
       return;
     }
     try {
-      await createTask({
+      await updateTask({
         title: data.title,
         description: data.description,
-        classCode: user!.unsafeMetadata!.classroomCode as string,
+        id: task._id as Id<"task">,
       });
       reset();
       if (dialogCloseRef.current) {
@@ -52,7 +53,6 @@ const CreateTaskDialog = ({ DialogInitiator }: IProps) => {
       console.error("Error creating task:", error);
     }
   };
-
   return (
     <div className="h-full w-full">
       <TaskDialog
@@ -68,4 +68,4 @@ const CreateTaskDialog = ({ DialogInitiator }: IProps) => {
   );
 };
 
-export default CreateTaskDialog;
+export default UpdateTask;
