@@ -63,7 +63,7 @@ export default function Home() {
               {user?.unsafeMetadata?.type === "teacher" &&
                 tasks &&
                 tasks?.length > 0 && (
-                  <div className="sm:mb-4">
+                  <div className="md:mb-0 mb-0">
                     <CreateTaskDialog
                       DialogInitiator={
                         <Card className="h-full w-full flex justify-center items-center min-h-48">
