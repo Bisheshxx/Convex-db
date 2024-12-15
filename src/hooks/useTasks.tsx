@@ -1,4 +1,4 @@
-import { useQuery } from "convex/react";
+import { useMutation, useQuery } from "convex/react";
 import React, { useEffect, useState } from "react";
 import { api } from "../../convex/_generated/api";
 import { Tasks } from "@/Types";
@@ -10,13 +10,14 @@ const useTasks = ({ classCode }: IProps) => {
   const tasks = useQuery(api.tasks.getTasksByClassCode, {
     classCode,
   });
+  const updatetask = useMutation(api.tasks.updateTask);
   useEffect(() => {
     if (tasks !== undefined) {
       setIsLoading(false);
     }
   }, [tasks]);
 
-  return { tasks, isLoading };
+  return { tasks, isLoading, updatetask };
 };
 
 export default useTasks;

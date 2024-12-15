@@ -1,4 +1,4 @@
-import { v } from "convex/values";
+import { GenericId, v } from "convex/values";
 import { mutation, query } from "./_generated/server";
 import { Task } from "./types";
 export const createTask = mutation({
@@ -43,21 +43,18 @@ export const getTasksByClassCode = query({
 
 export const updateTask = mutation({
   args: {
-    id: v.string(),
+    id: v.id("task"),
     title: v.string(),
     description: v.string(),
   },
-  handler: async (
-    ctx,
-    args: { id: string; title: string; description: string }
-  ) => {
-    // await ctx.db.patch("tasks", args);
-    // const res = await ctx.db.patch("task", args);
-    // try {
-    //     await ctx.db.patch("task", args.taskId, updates);
-    // } catch (error) {
-    //     throw new Error("Some thing went wrong while updating the task!");
-    // }
+  handler: async (ctx, args) => {
+    const { title, description } = args;
+    await ctx.db.patch(args.id, {
+      title: args.title,
+      description: args.description,
+    });
+    const res = await ctx.db.patch(args.id, { title, description });
+    console.log(res);
   },
 });
 // export const editTask = mutation({

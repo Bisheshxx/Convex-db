@@ -19,9 +19,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useUser } from "@clerk/nextjs";
 import { useMutation } from "convex/react";
 import { api } from "../../convex/_generated/api";
-import { Plus } from "lucide-react";
-import { Card } from "./ui/card";
 import { useRef } from "react"; // Add this import
+import TaskDialog from "./TaskDialog";
+import { Card } from "./ui/card";
+import { Plus } from "lucide-react";
 
 type FormData = z.infer<typeof taskSchema>;
 
@@ -69,58 +70,15 @@ const CreateTaskDialog = ({ DialogInitiator }: IProps) => {
 
   return (
     <div className="h-full w-full">
-      <Dialog>
-        <DialogTrigger asChild>{DialogInitiator}</DialogTrigger>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Create Task</DialogTitle>
-            <DialogDescription asChild>
-              <form className="mt-4" onSubmit={handleSubmit(onSubmit)}>
-                <div className="grid w-full items-center gap-4">
-                  <div className="flex flex-col space-y-1.5">
-                    <Label htmlFor="name">Task Title</Label>
-                    <Input
-                      id="name"
-                      placeholder="Enter your task title"
-                      {...register("title")}
-                    />
-                    {errors && (
-                      <div className="text-xs text-rose-700">
-                        {errors.title?.message}
-                      </div>
-                    )}
-                  </div>
-                  <div className="flex flex-col space-y-1.5">
-                    <Label htmlFor="description">Description</Label>
-                    <Textarea
-                      id="description"
-                      placeholder="Type your task details here."
-                      {...register("description")}
-                    />
-                    {errors && (
-                      <div className="text-xs text-rose-700">
-                        {errors.description?.message}
-                      </div>
-                    )}
-                  </div>
-                  <div className="flex w-full justify-center">
-                    <div className="flex gap-2">
-                      <DialogClose ref={dialogCloseRef} asChild>
-                        <Button type="button" variant="outline">
-                          Cancel
-                        </Button>
-                      </DialogClose>
-                      <Button type="submit" disabled={isSubmitting}>
-                        {isSubmitting ? "Creating..." : "Create task"}
-                      </Button>
-                    </div>
-                  </div>
-                </div>
-              </form>
-            </DialogDescription>
-          </DialogHeader>
-        </DialogContent>
-      </Dialog>
+      <TaskDialog
+        DialogInitiator={DialogInitiator}
+        register={register}
+        handleSubmit={handleSubmit}
+        errors={errors}
+        isSubmitting={isSubmitting}
+        onSubmit={onSubmit}
+        dialogCloseRef={dialogCloseRef}
+      />
     </div>
   );
 };
