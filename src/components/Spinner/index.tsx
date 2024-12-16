@@ -1,9 +1,18 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 interface IProps {
   height?: string;
   width?: string;
 }
 const Spinner = ({ height = "24", width = "24" }: IProps) => {
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setIsVisible(true), 300); // Delay showing the loader
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (!isVisible) return null;
+
   return (
     <div className="grid min-h-[140px] w-full place-items-center overflow-x-scroll rounded-lg p-6 lg:overflow-visible">
       <svg

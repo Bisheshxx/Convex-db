@@ -26,7 +26,7 @@ export default function Home() {
       });
     }
   }, [user]);
-  if (user === null || user === undefined) {
+  if (user === null || (user === undefined && !isLoading)) {
     return (
       <div className="h-full w-full flex justify-center items-center">
         <Spinner height="50" width="50" />
